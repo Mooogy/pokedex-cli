@@ -5,12 +5,22 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
+	"github.com/Mooogy/pokedex-cli/internal/pokeapi"
 )
 
+type config struct {
+	pokeapiClient pokeapi.Client
+	nextLocationsURL *string
+	prevLocationsURL *string
+}
+
 func initRepl() {
+	cfg := &config{pokeapiClient: pokeapi.NewClient(5 * time.Second)}
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
-		fmt.Print("Pokemon > ")
+		fmt.Print("Pokedex > ")
 		scanner.Scan()
 
 		input := cleanInput(scanner.Text())
@@ -21,9 +31,9 @@ func initRepl() {
 		commandName := input[0]
 		validCommands := getCommands()
 		if command, ok := validCommands[commandName]; ok {
-			err := command.callback()
+			err := command.callback(cfg)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Printf("\n%v\n\n", err)
 			}
 			continue
 		} else {
@@ -42,7 +52,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name			string
 	description		string
-	callback		func() error
+	callback		func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -56,6 +66,16 @@ func getCommands() map[string]cliCommand {
 			name: "exit",
 			description: "Closes the PokedexCLI",
 			callback: commandExit,
+		},
+		"map": {
+			name: "map",
+			description: "Displays the next page of location-areas",
+			callback:  commandMapf,
+		},
+		"mapb": {
+			name: "mapb",
+			description: "Displays the previous page of location-areas",
+			callback:  commandMapb,
 		},
 	}
 }
