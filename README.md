@@ -1,9 +1,13 @@
 # pokedex-cli mini project
 
-Ensure you have Go toolchain installed and run these commands in any CLI of your choice:
+To use, clone the repo, ensure you have Go toolchain installed, and run these commands in any CLI of your choice:
+```
+go run .
+```
+OR
 ```
 go build
-go run .
+./pokedex-cli
 ```
 
 Thats it.
