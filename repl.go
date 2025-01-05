@@ -17,7 +17,7 @@ type config struct {
 }
 
 func initRepl() {
-	cfg := &config{pokeapiClient: pokeapi.NewClient(5 * time.Second)}
+	cfg := &config{pokeapiClient: pokeapi.NewClient(5 * time.Second, 30 * time.Second)}
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
