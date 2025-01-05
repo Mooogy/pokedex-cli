@@ -24,7 +24,8 @@ func commandCatch(cfg *config, args ...string) error {
 	// Custom formula: CR = 20 + 80 * (1 - (baseEXP / 608))
 	catchRate := int32(20.0 + 75.0 * (1.0 - (float64(pokemon.BaseExperience) / 608.0)))
 	if caught := rand.Int31n(101) <= int32(catchRate); caught {
-		fmt.Println(pokemonName + " was caught!\n")
+		fmt.Println(pokemonName + " was caught!")
+		fmt.Println("You may now inspect " + pokemonName + " with the inspect command.\n")
 		cfg.pokedex[pokemonName] = pokemon
 		return nil
 	}

@@ -2,7 +2,6 @@ package pokeapi
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 )
@@ -13,7 +12,6 @@ func (c* Client) GetEncountersByLocation(location string) (EncountersResponse, e
 
 	// Check if data is in cache
 	if entry, ok := c.cache.Get(url); ok {
-		fmt.Println("PULLING FROM CACHE")
 		var encounters EncountersResponse
 		err := json.Unmarshal(entry, &encounters)
 		if err != nil {
