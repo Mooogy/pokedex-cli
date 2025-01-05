@@ -12,12 +12,13 @@ import (
 
 type config struct {
 	pokeapiClient pokeapi.Client
+	pokedex map[string]pokeapi.Pokemon
 	nextLocationsURL *string
 	prevLocationsURL *string
 }
 
 func initRepl() {
-	cfg := &config{pokeapiClient: pokeapi.NewClient(5 * time.Second, 30 * time.Second)}
+	cfg := &config{pokeapiClient: pokeapi.NewClient(5 * time.Second, 90 * time.Second), pokedex: map[string]pokeapi.Pokemon{}}
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -80,8 +81,13 @@ func getCommands() map[string]cliCommand {
 		},
 		"explore": {
 			name: "explore <location_name>",
-			description: "Displays all encounterable pokemon at a given location",
+			description: "Displays all encounterable pokemon at the named location",
 			callback: commandExplore,
+		},
+		"catch": {
+			name: "catch <pokemon_name>",
+			description: "Attempts to catch the named pokemon",
+			callback: commandCatch,
 		},
 	}
 }
