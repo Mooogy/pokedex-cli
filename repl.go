@@ -29,11 +29,12 @@ func initRepl() {
 		}
 
 		commandName := input[0]
+		args := input[1:]
 		validCommands := getCommands()
 		if command, ok := validCommands[commandName]; ok {
-			err := command.callback(cfg)
+			err := command.callback(cfg, args...)
 			if err != nil {
-				fmt.Printf("\n%v\n\n", err)
+				fmt.Printf("%v\n\n", err)
 			}
 			continue
 		} else {
@@ -52,7 +53,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name			string
 	description		string
-	callback		func(*config) error
+	callback		func(*config, ...string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -69,13 +70,18 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name: "map",
-			description: "Displays the next page of location-areas",
+			description: "Displays the next page of locations",
 			callback:  commandMapf,
 		},
 		"mapb": {
 			name: "mapb",
-			description: "Displays the previous page of location-areas",
+			description: "Displays the previous page of locations",
 			callback:  commandMapb,
+		},
+		"explore": {
+			name: "explore <location_name>",
+			description: "Displays all encounterable pokemon at a given location",
+			callback: commandExplore,
 		},
 	}
 }

@@ -2,7 +2,6 @@ package pokeapi
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 )
@@ -19,7 +18,6 @@ func (c* Client) GetLocations(pageURL *string) (LocationResponse, error) {
 		if err != nil {
 			return LocationResponse{}, err
 		}
-		fmt.Println("DATA PULLED FROM CACHE")
 		return locations, nil
 	}
 

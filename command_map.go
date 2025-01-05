@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func commandMapf(cfg *config) error {
+func commandMapf(cfg *config, args ...string) error {
 	// Use config's nextLocationsURL, GetLocations will use first page URL if nil
 	locationsRes, err := cfg.pokeapiClient.GetLocations(cfg.nextLocationsURL)
 	if err != nil {
@@ -22,7 +22,7 @@ func commandMapf(cfg *config) error {
 	return nil
 }
 
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, args ...string) error {
 	// Check if on first page
 	if cfg.prevLocationsURL == nil {
 		return fmt.Errorf("already on the first page")
