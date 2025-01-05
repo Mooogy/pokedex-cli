@@ -15,7 +15,7 @@ func commandCatch(cfg *config, args ...string) error {
 	// Get pokemon data 
 	pokemon, err := cfg.pokeapiClient.GetPokemonDetails(pokemonName)
 	if err != nil {
-		return nil
+		return err
 	}
 
 	fmt.Println("Throwing a Pokeball at " + pokemonName + "...")
